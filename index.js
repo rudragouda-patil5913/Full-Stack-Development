@@ -10,6 +10,14 @@ const calculateSum = (count) => {
   }
   return sum;
 };
+// calculateMul
+const calculateMul = (count) => {
+  let mul = 1;
+  for (let i = 1; i < count; i++) {
+    mul *= i;
+  }
+  return mul;
+};
 
 // app.post("/", (req, res) => {
 //   const answer = calculateSum(100);
@@ -49,16 +57,38 @@ app.use(bodyParser.json());
 //   res.send(req.body);
 // });
 
+// app.post("/", (req, res) => {
+//   // const count = req.query.count;
+//   // const count = req.headers.count;
+//   const count = req.body.count;
+//   const answer = calculateSum(count);
+//   const output = {
+//     sum: answer,
+//   };
+//   res.send(output);
+//   // res.send(req.body);
+// });
+
+// What servers can send back
+// Headers,statusCode, body
+
+// Body --->   HTML,JSON,Simple text
+
+// JSON
+// app.post("/",(req,res)=>{
+//   const count = req.body.count;
+//   const sum = calculateSum(count);
+//   const mul = calculateMul(count);
+//   const outputObj={
+//     sum: sum,
+//     mul: mul
+//   }
+//   res.send(outputObj)
+// })
+
+// HTML
 app.post("/", (req, res) => {
-  // const count = req.query.count;
-  // const count = req.headers.count;
-  const count = req.body.count;
-  const answer = calculateSum(count);
-  const output = {
-    sum: answer,
-  };
-  res.send(output);
-  // res.send(req.body);
+  res.sendFile(__dirname + "/index.html");
 });
 
 app.listen(port, () => {
