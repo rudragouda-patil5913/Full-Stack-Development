@@ -87,9 +87,20 @@ app.use(bodyParser.json());
 // })
 
 // HTML
-app.post("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+// app.post("/", (req, res) => {
+//   res.sendFile(__dirname + "/index.html");
+// });
+
+
+app.get("/", (req,res)=>{
+  const count = req.query.count;
+  const ans = calculateSum(count);
+  const Obj ={
+    sum: ans
+  }
+  res.send(Obj);
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
