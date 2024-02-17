@@ -1,0 +1,49 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const app = express();
+
+app.use(bodyParser.json());
+
+let todoList = [];
+
+const findIndex = (arr, id) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id == id) return i;
+  }
+  return -1;
+};
+
+const deleteTodo = (arr, id) => {
+  let newtodo = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i !== id) {
+      newtodo.push(arr[i]);
+    }
+  }
+  return newtodo;
+};
+
+app.get("/todolist", (req, res) => {
+  res.send(todoList);
+});
+
+app.post("/todolist", (req, res) => {
+  const objTodo = {
+    id: Math.floor(Math.random() * 100),
+    title: req.body.title,
+    desc: req.body.desc,
+  };
+  todoList.push(objTodo);
+  res.status(200).send();
+});
+
+app.delete("/todolist/:id", (req, res) => {
+  const idx = findIndex(todoList, parseInt(req.params.id));
+  todoList = deleteTodo(todoList, idx);
+  res.send();
+});
+
+app.listen(3000, () => {
+  console.log("Server running successfully");
+});
