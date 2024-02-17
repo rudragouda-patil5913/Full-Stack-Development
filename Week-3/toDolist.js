@@ -28,6 +28,21 @@ app.get("/todolist", (req, res) => {
   res.send(todoList);
 });
 
+app.put("/todolist/:id",(req,res)=>{
+    const idx = findIndex(todoList,parseInt(req.params.id));
+    if(idx === -1){
+        res.status(400).send("enter the proper id")
+    }else{
+        let newObj={
+            id : todoList[idx].id,
+            title : req.body.title,
+            desc : req.body.desc
+        }
+        todoList[idx] = newObj;
+        res.status(201).send();
+    } 
+})
+
 app.post("/todolist", (req, res) => {
   const objTodo = {
     id: Math.floor(Math.random() * 100),
