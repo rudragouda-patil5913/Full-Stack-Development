@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const fs = require("fs");
 
 const app = express();
 
@@ -25,23 +26,23 @@ const deleteTodo = (arr, id) => {
 };
 
 app.get("/todolist", (req, res) => {
-  res.send(todoList);
+  res.json(todoList);
 });
 
-app.put("/todolist/:id",(req,res)=>{
-    const idx = findIndex(todoList,parseInt(req.params.id));
-    if(idx === -1){
-        res.status(400).send("enter the proper id")
-    }else{
-        let newObj={
-            id : todoList[idx].id,
-            title : req.body.title,
-            desc : req.body.desc
-        }
-        todoList[idx] = newObj;
-        res.status(201).send();
-    } 
-})
+app.put("/todolist/:id", (req, res) => {
+  const idx = findIndex(todoList, parseInt(req.params.id));
+  if (idx === -1) {
+    res.status(400).send("enter the proper id");
+  } else {
+    let newObj = {
+      id: todoList[idx].id,
+      title: req.body.title,
+      desc: req.body.desc,
+    };
+    todoList[idx] = newObj;
+    res.status(201).send();
+  }
+});
 
 app.post("/todolist", (req, res) => {
   const objTodo = {
